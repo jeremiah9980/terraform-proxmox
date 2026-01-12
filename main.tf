@@ -47,3 +47,22 @@ module "vm_from_iso" {
   iso_local_path  = var.iso_local_path
   iso_file_name   = var.iso_file_name
 }
+module "iso_template" {
+  source = "./modules/iso-template"
+
+  providers = {
+    proxmox = proxmox
+  }
+
+  # variables...
+}
+
+module "vm_from_template" {
+  source = "./modules/vm-qemu"
+
+  providers = {
+    proxmox = proxmox
+  }
+
+  # variables...
+}
