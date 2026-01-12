@@ -1,6 +1,16 @@
+terraform {
+  required_providers {
+    proxmox = {
+      source  = "bpg/proxmox"
+      version = ">= 0.93.0"
+    }
+  }
+}
+
 provider "proxmox" {
-  endpoint = var.pm_api_url
-  api_token = var.pm_api_token   # format: "terraform@pve!terraform-token=SECRET"
-  insecure  = true
-  # Optional: specify a node for some operations; most resources accept node_name
+  endpoint = "https://47.163.25.30:8006/api2/json"
+  insecure = true
+
+  username = var.pm_user
+  password = var.pm_password
 }
