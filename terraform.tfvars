@@ -14,4 +14,4 @@ vlan_tag      = 10
 
 ci_user = "ubuntu"
 
-ssh_public_key = "ssh-ed25519 AAAA..."
+ssh_public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIB2... terraform-proxmox"
