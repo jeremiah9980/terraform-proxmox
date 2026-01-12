@@ -2,6 +2,24 @@
 # main.tf — CLEAN TEMPLATE-CLONE ONLY
 ############################################
 
+module "web" {
+  source = "./modules/vm-web"
+
+  vm_count     = 2
+  target_node  = var.target_node
+  template_vmid = var.template_vmid
+  bridge       = var.bridge
+}
+
+module "db" {
+  source = "./modules/vm-db"
+  vm_count = 1
+}
+
+module "gpu" {
+  source = "./modules/vm-gpu"
+  vm_count = 1
+}
 module "vm_from_template" {
   source = "./modules/vm-qemu"
 
