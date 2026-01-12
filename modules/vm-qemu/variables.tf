@@ -1,57 +1,42 @@
-############################################
-# Required Inputs
-############################################
-
 variable "vm_count" {
-  description = "Number of VMs to create"
   type        = number
+  description = "Number of VMs to create"
 }
 
 variable "vm_name_prefix" {
-  description = "Prefix for VM names"
   type        = string
+  description = "Prefix for VM names"
 }
 
 variable "target_node" {
-  description = "Target Proxmox node"
   type        = string
+  description = "Proxmox node name"
 }
 
 variable "template_vmid" {
-  description = "VMID of cloud-init template"
   type        = number
+  description = "VMID of cloud-init template"
 }
 
-############################################
-# Storage & Network
-############################################
-
 variable "storage_pool" {
-  description = "Storage pool for VM disks"
   type        = string
+  description = "Storage pool for VM disks"
 }
 
 variable "bridge" {
-  description = "Network bridge"
   type        = string
+  description = "Network bridge"
 }
 
 variable "vlan_tag" {
-  description = "Optional VLAN tag"
   type        = number
   default     = 0
 }
 
-############################################
-# Cloud-init
-############################################
-
 variable "ci_user" {
-  description = "Cloud-init username"
   type        = string
 }
 
 variable "ssh_public_key" {
-  description = "SSH public key"
   type        = string
 }
