@@ -1,9 +1,7 @@
 output "vm_names" {
-  description = "Names of created VMs"
-  value       = [for v in proxmox_vm_qemu.vm : v.name]
+  value = [for v in proxmox_virtual_environment_vm.vm : v.name]
 }
 
 output "vm_ids" {
-  description = "VMIDs of created VMs"
-  value       = [for v in proxmox_vm_qemu.vm : v.vmid]
+  value = [for v in proxmox_virtual_environment_vm.vm : v.vm_id]
 }
