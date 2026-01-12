@@ -1,68 +1,28 @@
-locals {
-  use_clone = length(trim(var.clone_template_name)) > 0
-  use_iso   = length(trim(var.iso_local_path)) > 0 && length(trim(var.iso_file_name)) > 0
-}
+############################################
+# main.tf — CLEAN TEMPLATE-CLONE ONLY
+############################################
 
-# Upload ISO if provided
-module "iso_upload" {
-  source = "./modules/iso-template"
-  count  = local.use_iso ? 1 : 0
-
-  node_name     = var.node_name
-  datastore_iso = var.datastore_iso
-
-  iso_local_path = var.iso_local_path
-  iso_file_name  = var.iso_file_name
-}
-
-# VM(s) from template clone (best practice)
 module "vm_from_template" {
   source = "./modules/vm-qemu"
-  count  = local.use_clone ? 1 : 0
 
-  vm_count          = var.vm_count
-  node_name         = var.node_name
-  datastore_disks   = var.datastore_disks
-  clone_template_name = var.clone_template_name
+  providers = {
+    proxmox = proxmox
+  }
 
+  # VM count / naming
+  vm_count       = var.vm_count
+  vm_name_prefix = var.vm_name_prefix
+
+  # Proxmox placement
+  target_node   = var.target_node
+  template_vmid = var.template_vmid
+
+  # Storage + network
+  storage_pool = var.storage_pool
+  bridge        = var.bridge
+  vlan_tag      = var.vlan_tag
+
+  # Cloud-init
   ci_user        = var.ci_user
   ssh_public_key = var.ssh_public_key
-}
-
-# VM(s) that boot from ISO (for initial install / packer)
-module "vm_from_iso" {
-  source = "./modules/iso-template"
-  count  = local.use_iso ? 1 : 0
-
-  node_name       = var.node_name
-  datastore_iso   = var.datastore_iso
-  datastore_disks = var.datastore_disks
-
-  create_boot_vm  = true
-  vm_count        = var.vm_count
-
-  ci_user         = var.ci_user
-  ssh_public_key  = var.ssh_public_key
-
-  iso_local_path  = var.iso_local_path
-  iso_file_name   = var.iso_file_name
-}
-module "iso_template" {
-  source = "./modules/iso-template"
-
-  providers = {
-    proxmox = proxmox
-  }
-
-  # variables...
-}
-
-module "vm_from_template" {
-  source = "./modules/vm-qemu"
-
-  providers = {
-    proxmox = proxmox
-  }
-
-  # variables...
 }
