@@ -1,42 +1,80 @@
+############################################
+# Proxmox Provider / Auth
+############################################
+
 variable "pm_api_url" {
-  description = "Example: https://PROXMOX-IP:8006/api2/json"
+  description = "Proxmox API endpoint, e.g. https://PROXMOX-IP:8006/api2/json"
   type        = string
 }
 
-variable "pm_api_token" {
-  description = "Format: terraform@pve!terraform-token=TOKEN_VALUE"
+variable "pm_user" {
+  description = "Proxmox username (or API token user)"
+  type        = string
+}
+
+variable "pm_password" {
+  description = "Proxmox password or API token secret"
   type        = string
   sensitive   = true
 }
 
-variable "node_name" {
-  description = "Target Proxmox node name (as shown in the UI)"
+############################################
+# Proxmox Placement
+############################################
+
+variable "target_node" {
+  description = "Target Proxmox node name (e.g. host1)"
   type        = string
-  default     = "pve1"
 }
 
-variable "datastore_iso" {
-  description = "Datastore for ISOs (often: local)"
-  type        = string
-  default     = "local"
+############################################
+# Template Clone Settings
+############################################
+
+variable "template_vmid" {
+  description = "VMID of the Proxmox cloud-init template (e.g. 9000)"
+  type        = number
 }
 
-variable "datastore_disks" {
-  description = "Datastore for VM disks (often: local-lvm)"
-  type        = string
-  default     = "local-lvm"
-}
+############################################
+# VM Configuration
+############################################
 
 variable "vm_count" {
-  type    = number
-  default = 1
+  description = "Number of VMs to create"
+  type        = number
+  default     = 1
 }
 
-# Cloud-init / SSH
-variable "ssh_public_key" {
-  description = "SSH public key that will be injected via cloud-init"
+variable "vm_name_prefix" {
+  description = "Prefix for VM names"
+  type        = string
+  default     = "cg-vm"
+}
+
+############################################
+# Storage & Network
+############################################
+
+variable "storage_pool" {
+  description = "Datastore for VM disks (e.g. local-zfs, local-lvm)"
   type        = string
 }
+
+variable "bridge" {
+  description = "Proxmox bridge to attach VM NICs to (e.g. vmbr0)"
+  type        = string
+}
+
+variable "vlan_tag" {
+  description = "Optional VLAN tag (0 = none)"
+  type        = number
+  default     = 0
+}
+
+############################################
+# Cloud-init / Access
+############################################
 
 variable "ci_user" {
   description = "Default cloud-init username"
@@ -44,22 +82,7 @@ variable "ci_user" {
   default     = "ubuntu"
 }
 
-# Option A: Clone from template (recommended after you have a golden template)
-variable "clone_template_name" {
-  description = "If set, we will clone from this existing Proxmox VM template name."
+variable "ssh_public_key" {
+  description = "SSH public key injected via cloud-init"
   type        = string
-  default     = ""
-}
-
-# Option B: Boot from ISO (one-time manual install or packer-driven)
-variable "iso_local_path" {
-  description = "Path on the machine running Terraform to the ISO file to upload (optional)."
-  type        = string
-  default     = ""
-}
-
-variable "iso_file_name" {
-  description = "Filename to store in the ISO datastore (e.g., ubuntu-22.04.3-live-server-amd64.iso)"
-  type        = string
-  default     = ""
 }
