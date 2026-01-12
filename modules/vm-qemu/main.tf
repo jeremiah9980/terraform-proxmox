@@ -1,34 +1,43 @@
-resource "proxmox_vm_qemu" "vm" {
-  count       = var.vm_count
-  name        = format("%s-%02d", var.vm_name_prefix, count.index + 1)
-  target_node = var.target_node
+resource "proxmox_virtual_environment_vm" "vm" {
+  count = var.vm_count
+  name  = format("%s-%02d", var.vm_name_prefix, count.index + 1)
+  node_name = var.target_node
 
-  clone      = tostring(var.template_vmid)
-  full_clone = true
+  clone {
+    vm_id = var.template_vmid
+  }
 
-  agent   = 1
-  os_type = "cloud-init"
+  agent {
+    enabled = true
+  }
 
-  cores  = 2
-  memory = 2048
+  cpu {
+    cores = 2
+  }
 
-  ciuser  = var.ci_user
-  sshkeys = var.ssh_public_key
+  memory {
+    dedicated = 2048
+  }
 
-  scsihw = "virtio-scsi-pci"
+  initialization {
+    user_account {
+      username = var.ci_user
+      keys     = [var.ssh_public_key]
+    }
+  }
 
   disk {
-    slot    = 0
-    type    = "scsi"
-    size    = "40G"
-    storage = var.storage_pool
+    datastore_id = var.storage_pool
+    interface    = "scsi0"
+    size         = 40
   }
 
-  network {
-    model  = "virtio"
+  network_device {
     bridge = var.bridge
-    tag    = var.vlan_tag > 0 ? var.vlan_tag : null
+    vlan_id = var.vlan_tag > 0 ? var.vlan_tag : null
   }
 
-  onboot = true
+  operating_system {
+    type = "l26"
+  }
 }
