@@ -2,11 +2,10 @@ terraform {
   required_providers {
     proxmox = {
       source  = "bpg/proxmox"
-      version = ">= 0.93.0"
+      version = ">= 0.63.0"
     }
   }
 }
-
 provider "proxmox" {
   endpoint = "https://47.163.25.30:8006/api2/json"
   insecure = true
