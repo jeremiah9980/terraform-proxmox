@@ -1,12 +1,29 @@
-variable "node_name" { type = string }
-variable "datastore_iso" { type = string }
-variable "datastore_disks" { type = string, default = "local-lvm" }
+variable "datastore_disks" {
+  type        = string
+  description = "Storage pool for VM disks"
+  default     = "local-zfs"
+}
 
-variable "iso_local_path" { type = string }
-variable "iso_file_name"  { type = string }
+variable "create_boot_vm" {
+  type        = bool
+  description = "Whether to create the boot VM"
+  default     = false
+}
 
-variable "create_boot_vm" { type = bool, default = false }
-variable "vm_count" { type = number, default = 1 }
+variable "vm_count" {
+  type        = number
+  description = "Number of VMs to create"
+  default     = 1
+}
 
-variable "ci_user" { type = string, default = "ubuntu" }
-variable "ssh_public_key" { type = string, default = "" }
+variable "ci_user" {
+  type        = string
+  description = "Cloud-init user"
+  default     = "ubuntu"
+}
+
+variable "ssh_public_key" {
+  type        = string
+  description = "SSH public key injected via cloud-init"
+  default     = ""
+}
