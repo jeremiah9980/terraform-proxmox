@@ -19,8 +19,8 @@ resource "proxmox_vm_qemu" "vm" {
 
   disk {
     slot    = 0
-    size    = "40G"
     type    = "scsi"
+    size    = "40G"
     storage = var.storage_pool
   }
 
@@ -32,4 +32,3 @@ resource "proxmox_vm_qemu" "vm" {
 
   onboot = true
 }
-
