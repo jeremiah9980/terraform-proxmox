@@ -3,8 +3,10 @@ resource "proxmox_virtual_environment_vm" "vm" {
   for_each  = var.vms
   name      = each.key
   node_name = var.node_name
-
-  clone { vm_id = var.template_vmid full = true }
+clone {
+  vm_id = var.template_vmid
+  full  = true
+}
 
   cpu { cores = each.value.cores }
   memory { dedicated = each.value.memory_mb }
