@@ -1,11 +1,10 @@
 ############################################
 # main.tf — CLEAN TEMPLATE-CLONE ONLY
 ############################################
-
 module "web" {
   source = "./modules/vm-web"
 
-  vm_count     = 2
+  vm_count     = 2  
   target_node  = var.target_node
   template_vmid = var.template_vmid
   bridge       = var.bridge
