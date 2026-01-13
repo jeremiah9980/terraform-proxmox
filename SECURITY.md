@@ -2,7 +2,7 @@
 
 Add these repository secrets:
 
-- PM_API_URL: https://PROXMOX-IP:8006/api2/json
+- PM_API_URL: https://47.163.25.30:8006/api2/json
 - PM_API_TOKEN: terraform@pve!terraform-token=TOKEN_VALUE
 - PM_NODE_NAME: pve1
 - PM_DATASTORE_ISO: local
