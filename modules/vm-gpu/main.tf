@@ -6,13 +6,13 @@ resource "proxmox_virtual_environment_vm" "vm" {
 
   clone { vm_id = var.template_vmid full = true }
 
-  cpu { cores = each.value.cores }
-  memory { dedicated = each.value.memory_mb }
+  cpu { cores = 8 }
+  memory { dedicated = 16384 }
 
   disk {
     datastore_id = var.disk_datastore
     interface    = "scsi0"
-    size         = 40
+    size         = 80
   }
 
   initialization {
@@ -26,5 +26,13 @@ resource "proxmox_virtual_environment_vm" "vm" {
   network_device {
     bridge  = var.bridge
     vlan_id = var.vlan_tag
+  }
+
+  hostpci {
+    device  = "hostpci0"
+    mapping = var.gpu_mapping_name
+    pcie    = true
+    rombar  = true
+    xvga    = false
   }
 }
