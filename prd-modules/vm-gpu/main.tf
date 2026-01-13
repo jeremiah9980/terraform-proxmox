@@ -4,7 +4,10 @@ resource "proxmox_virtual_environment_vm" "vm" {
   name      = each.key
   node_name = var.node_name
 
-  clone { vm_id = var.template_vmid full = true }
+clone {
+  vm_id = var.template_vmid
+  full  = true
+}
 
   cpu { cores = 8 }
   memory { dedicated = 16384 }
