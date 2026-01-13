@@ -5,7 +5,7 @@ pm_password = "P@$$WORD"
 target_node   = "host1"
 template_vmid = 9000
 
-vm_count       = 2
+vm_count       = 3
 vm_name_prefix = "cg-test"
 
 storage_pool = "local-zfs"
