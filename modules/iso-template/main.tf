@@ -39,9 +39,9 @@ resource "proxmox_virtual_environment_vm" "boot_vm" {
   }
 
   cdrom {
-    enabled      = true
-    file_id      = proxmox_virtual_environment_file.iso.id
-    interface    = "ide0"
+    enabled   = true
+    file_id   = proxmox_virtual_environment_file.iso.id
+    interface = "ide0"
   }
 
   boot_order = ["ide0", "scsi0", "net0"]

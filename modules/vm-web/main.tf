@@ -13,7 +13,7 @@ resource "proxmox_virtual_environment_vm" "web" {
   memory { dedicated = 2048 }
 
   network_device {
-    bridge = var.bridge
+    bridge  = var.bridge
     vlan_id = 10
   }
 }

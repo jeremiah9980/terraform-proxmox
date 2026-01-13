@@ -1,6 +1,6 @@
 resource "proxmox_virtual_environment_vm" "vm" {
-  count = var.vm_count
-  name  = format("%s-%02d", var.vm_name_prefix, count.index + 1)
+  count     = var.vm_count
+  name      = format("%s-%02d", var.vm_name_prefix, count.index + 1)
   node_name = var.target_node
 
   clone {
@@ -33,7 +33,7 @@ resource "proxmox_virtual_environment_vm" "vm" {
   }
 
   network_device {
-    bridge = var.bridge
+    bridge  = var.bridge
     vlan_id = var.vlan_tag > 0 ? var.vlan_tag : null
   }
 

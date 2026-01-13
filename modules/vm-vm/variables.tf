@@ -29,14 +29,14 @@ variable "bridge" {
 }
 
 variable "vlan_tag" {
-  type        = number
-  default     = 0
+  type    = number
+  default = 0
 }
 
 variable "ci_user" {
-  type        = string
+  type = string
 }
 
 variable "ssh_public_key" {
-  type        = string
+  type = string
 }
